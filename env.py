@@ -7,7 +7,7 @@ from selenium.common.exceptions import TimeoutException,NoSuchElementException,E
 import time, random, cv2
 import numpy as np
 
-url = 'http://microyu.top'#"http://www.wesane.com/game/654"
+url = 'http://localhost/watermelon/'#"http://www.wesane.com/game/654"
 
 def process_frame42(frame):
     frame = frame[:250, :160]
@@ -68,6 +68,7 @@ class bigwaterlemon:
         score = self.browser.execute_script("return cc.js.getClassByName('GameManager').Instance.score;")
         done = False
         if score < self.last_score:
+            print(score, self.last_score)
             done = True
         reward = score - self.last_score
         self.last_score = score
