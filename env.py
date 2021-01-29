@@ -57,21 +57,27 @@ class bigwaterlemon:
         state = process_frame42(state)
         return state
     
-    def step(self, x):
+    def act(self, x):
         actions = TouchActions(self.browser)
         actions.tap_and_hold(x, 200)
         actions.move(x, 200).perform()
         time.sleep(1)
         actions.release(x, 200).perform()
-        time.sleep(3)
+
+    def step(self, x):
+        self.act(x)
+        time.sleep(5)
 
         score = self.browser.execute_script("return cc.js.getClassByName('GameManager').Instance.score;")
-        done = False
-        if score < self.last_score:
-            print(score, self.last_score)
-            done = True
         reward = score - self.last_score
         self.last_score = score
+        print(reward, score)
+
+        done = False
+        end = self.browser.execute_script("return cc.js.getClassByName('GameFunction').Instance.endOne")
+        if end == 1:
+            self.reset()
+            done = True
         return self.get_state(), reward, done
     
     def reset(self):
