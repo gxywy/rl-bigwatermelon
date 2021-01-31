@@ -134,8 +134,8 @@ model.pkl
 test.png
 filename.png
 test.py
-main.py
-env.py
-model.py
-my_optim.py
-train.py
+./main.py
+./env.py
+./model.py
+./my_optim.py
+./train.py
