@@ -29,6 +29,7 @@ class bigwaterlemon:
         self.width = 160
         self.height = 250
         self.last_score = 0
+        self.episode_num = 0
         mobile_emulation = {
             "deviceMetrics": { "width": self.width, "height": self.height, "pixelRatio": 3.0 },
             "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19"
@@ -71,11 +72,12 @@ class bigwaterlemon:
         score = self.browser.execute_script("return cc.js.getClassByName('GameManager').Instance.score;")
         reward = score - self.last_score
         self.last_score = score
-        print(reward, score)
 
         done = False
         end = self.browser.execute_script("return cc.js.getClassByName('GameFunction').Instance.endOne")
         if end == 1:
+            print(self.episode_num, score)
+            self.episode_num += 1
             self.reset()
             done = True
         return self.get_state(), reward, done

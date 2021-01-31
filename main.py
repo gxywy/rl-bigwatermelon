@@ -9,7 +9,6 @@ import torch.multiprocessing as mp
 import my_optim
 from env import bigwaterlemon
 from model import ActorCritic
-from test import test
 from train import train
 
 # Based on
