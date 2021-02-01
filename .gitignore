@@ -135,3 +135,6 @@ test.png
 filename.png
 test.py
 backup/
+TD3/results
+TD3/TD3_0
+TD3/TD3_0_optimizer

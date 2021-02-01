@@ -7,7 +7,7 @@ from selenium.common.exceptions import TimeoutException,NoSuchElementException,E
 import time, random, cv2
 import numpy as np
 
-url = 'http://localhost/watermelon/'#"http://www.wesane.com/game/654"
+url = 'http://localhost/watermelon'#"http://www.wesane.com/game/654"
 
 def process_frame42(frame):
     frame = frame[:250, :160]
@@ -59,6 +59,9 @@ class bigwaterlemon:
         return state
     
     def act(self, x):
+        x = int(x)
+        if x == self.width:
+            x -= 1
         actions = TouchActions(self.browser)
         actions.tap_and_hold(x, 200)
         actions.move(x, 200).perform()
@@ -71,15 +74,16 @@ class bigwaterlemon:
 
         score = self.browser.execute_script("return cc.js.getClassByName('GameManager').Instance.score;")
         reward = score - self.last_score
+        #print(score, self.last_score, reward)
         self.last_score = score
 
         done = False
         end = self.browser.execute_script("return cc.js.getClassByName('GameFunction').Instance.endOne")
         if end == 1:
-            print(self.episode_num, score)
             self.episode_num += 1
             self.reset()
             done = True
+            self.last_score = 0
         return self.get_state(), reward, done
     
     def reset(self):

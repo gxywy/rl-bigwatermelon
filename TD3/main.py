@@ -80,7 +80,7 @@ if __name__ == "__main__":
 			action = (
 				policy.select_action(np.array(state))
 				+ np.random.normal(0, max_action * args.expl_noise, size=action_dim)
-			).clip(-max_action, max_action)
+			).clamp(-max_action / 2, max_action / 2) + (max_action / 2)
 
 		# Perform action
 		next_state, reward, done = env.step(action) 

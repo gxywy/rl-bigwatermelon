@@ -125,7 +125,7 @@ class TD3(object):
 			
 			next_action = (
 				self.actor_critic_target.pi(next_state) + noise
-			).clamp(-self.max_action, self.max_action)
+			).clamp(-self.max_action / 2, self.max_action / 2) + (self.max_action / 2)
 
 			# Compute the target Q value
 			target_Q1, target_Q2 = self.actor_critic_target.v(next_state, next_action)
